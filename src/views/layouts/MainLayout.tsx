@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, RouteComponentProps, Router, withRouter } from "react-router";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { Theme, createStyles } from "@material-ui/core";
@@ -10,12 +10,11 @@ import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "app/views/layouts/Menu";
+import { mainListItems } from "app/views/layouts/Menu";
 import { WithStyles } from "@material-ui/core";
+import Routes from "app/views/layouts/Routes";
 
 interface IProps extends RouteComponentProps<void>, WithStyles<typeof styles> {}
 interface IState {
@@ -42,7 +41,11 @@ class MainLayout extends React.Component<IProps, IState> {
       <React.Fragment>
         <CssBaseline />
         <div className={classes.root}>
-          <AppBar position="absolute" className={classes.appBar}>
+          <AppBar
+            position="absolute"
+            className={`${classes.appBar}  ${this.state.open &&
+              classes.appBarShift} `}
+          >
             <Toolbar
               disableGutters={!this.state.open}
               className={classes.toolbar}
@@ -51,7 +54,8 @@ class MainLayout extends React.Component<IProps, IState> {
                 color="inherit"
                 aria-label="Open drawer"
                 onClick={this.handleDrawerOpen}
-                className={classes.menuButton}
+                className={`${classes.menuButton} 
+                  ${this.state.open && classes.menuButtonHidden}`}
               >
                 <MenuIcon />
               </IconButton>
@@ -62,19 +66,15 @@ class MainLayout extends React.Component<IProps, IState> {
                 noWrap
                 className={classes.title}
               >
-                Dashboard
+                Material UI Examples
               </Typography>
-              <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
             </Toolbar>
           </AppBar>
           <Drawer
             variant="permanent"
             classes={{
-              paper: classes.drawerPaper,
+              paper: `${classes.drawerPaper} ${!this.state.open &&
+                classes.drawerPaperClose}`,
             }}
             open={this.state.open}
           >
@@ -85,23 +85,10 @@ class MainLayout extends React.Component<IProps, IState> {
             </div>
             <Divider />
             <List>{mainListItems}</List>
-            <Divider />
-            <List>{secondaryListItems}</List>
           </Drawer>
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
-            <Typography variant="h4" gutterBottom component="h2">
-              Orders
-            </Typography>
-            <Typography component="div" className={classes.chartContainer}>
-              <h1>Hello World</h1>
-            </Typography>
-            <Typography variant="h4" gutterBottom component="h2">
-              Products
-            </Typography>
-            <div className={classes.tableContainer}>
-              <h2>Yes! I do!</h2>
-            </div>
+            <Routes />
           </main>
         </div>
       </React.Fragment>
@@ -177,12 +164,6 @@ const styles = (theme: Theme) =>
       padding: theme.spacing.unit * 3,
       height: "100vh",
       overflow: "auto",
-    },
-    chartContainer: {
-      marginLeft: -22,
-    },
-    tableContainer: {
-      height: 320,
     },
     h5: {
       marginBottom: theme.spacing.unit * 2,

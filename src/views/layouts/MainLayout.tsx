@@ -6,13 +6,12 @@ import { Theme, createStyles } from "@material-ui/core";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { mainListItems } from "app/views/layouts/Menu";
+import Menu from "app/views/layouts/Menu";
 import { WithStyles } from "@material-ui/core";
 import Routes from "app/views/layouts/Routes";
 
@@ -84,7 +83,7 @@ class MainLayout extends React.Component<IProps, IState> {
               </IconButton>
             </div>
             <Divider />
-            <List>{mainListItems}</List>
+            <Menu />
           </Drawer>
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />

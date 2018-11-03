@@ -1,19 +1,19 @@
-import * as React from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { Theme, createStyles } from "@material-ui/core";
-import Drawer from "@material-ui/core/Drawer";
+import { createStyles, Theme } from "@material-ui/core";
+import { WithStyles } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import IconButton from "@material-ui/core/IconButton";
+import { withStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "app/views/layouts/Menu";
-import { WithStyles } from "@material-ui/core";
 import Routes from "app/views/layouts/Routes";
+import * as React from "react";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 interface IProps extends RouteComponentProps<void>, WithStyles<typeof styles> {}
 interface IState {
@@ -21,19 +21,19 @@ interface IState {
 }
 
 class MainLayout extends React.Component<IProps, IState> {
-  state = {
+  public state = {
     open: true,
   };
 
-  handleDrawerOpen = () => {
+  public handleDrawerOpen = () => {
     this.setState({ open: true });
-  };
+  }
 
-  handleDrawerClose = () => {
+  public handleDrawerClose = () => {
     this.setState({ open: false });
-  };
+  }
 
-  render() {
+  public render() {
     const { classes } = this.props;
 
     return (

@@ -1,5 +1,4 @@
-import reducers from "app/redux/reducers/Reducers";
-import { connectRouter, routerMiddleware } from "connected-react-router";
+import reducers, { initialState } from "app/redux/reducers/Reducers";
 import createBrowserHistory from "history/createBrowserHistory";
 import { applyMiddleware, compose, createStore } from "redux";
 import logger from "redux-logger";
@@ -8,7 +7,7 @@ import logger from "redux-logger";
 const history = createBrowserHistory();
 
 // Create middlewares
-const middlewares = [routerMiddleware(history)];
+const middlewares = [];
 
 if (process.env.NODE_ENV !== "production") {
   middlewares.push(logger);
@@ -16,7 +15,8 @@ if (process.env.NODE_ENV !== "production") {
 
 // Create store
 const store = createStore(
-  connectRouter(history)(reducers),
+  reducers,
+  initialState,
   compose(applyMiddleware(...middlewares)),
 );
 

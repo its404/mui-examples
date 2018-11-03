@@ -1,20 +1,34 @@
+const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TSLintPlugin = require("tslint-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const TSLintPlugin = require("tslint-webpack-plugin");
 
 module.exports = {
-  entry: "./src/index.tsx",
+  mode: "development",
+  entry: {
+    app: "./index.tsx",
+  },
+
   output: {
-    filename: "bundle.js",
-    path: __dirname + "/build"
+    filename: "[name].js",
+    path: path.resolve(__dirname, "build"),
+    publicPath: "/",
+    crossOriginLoading: "anonymous",
   },
   devServer: {
-    contentBase: path.join(__dirname, "build"),
-    compress: true,
-    port: 8000
+    contentBase: path.resolve(__dirname, "build"),
+    publicPath: "/",
+    port: 8000,
+    historyApiFallback: true,
+    open: true,
   },
+
+  context: path.resolve(__dirname, "src"),
+
+  target: "web",
+
   // Enable sourcemaps for debugging webpack's output.
   devtool: "source-map",
 
@@ -22,8 +36,8 @@ module.exports = {
     // Add '.ts' and '.tsx' as resolvable extensions.
     extensions: [".ts", ".tsx", ".js", ".json"],
     alias: {
-      app: path.resolve(__dirname, "src/")
-    }
+      app: path.resolve(__dirname, "src/"),
+    },
   },
 
   module: {
@@ -37,36 +51,57 @@ module.exports = {
       {
         test: /\.scss$/,
         use: [
-          // fallback to style-loader in development
-          process.env.NODE_ENV !== "production"
-            ? "style-loader"
-            : MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "/",
+            },
+          },
           "css-loader",
-          "sass-loader"
-        ]
+          "sass-loader",
+        ],
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
+        use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/,
-        use: ["file-loader"]
-      }
-    ]
+        test: /\.(png|svg|jpg|jpeg|gif|ico)$/,
+        use: ["file-loader"],
+      },
+    ],
   },
+
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          chunks: "initial",
+          test: path.resolve(__dirname, "node_modules"),
+          name: "vendor",
+          enforce: true,
+        },
+      },
+    },
+    runtimeChunk: {
+      name: "manifest",
+    },
+    minimize: false,
+  },
+
   plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new HtmlWebpackPlugin({
-      template: "./src/index.html",
-      filename: "index.html"
+      template: "./index.html",
+      filename: "index.html",
+      // favicon: "./assets/img/favicon.ico",
     }),
     new MiniCssExtractPlugin({
-      filename: "[name].css",
-      chunkFilename: "[id].css"
+      filename: "./styles/[name].css",
     }),
     new TSLintPlugin({
-      files: ["./src/**/*.tsx"]
+      files: ["./src/**/*.tsx"],
     }),
-    new Dotenv()
-  ]
+    new Dotenv(),
+  ],
 };

@@ -1,13 +1,13 @@
+import Content from "app/views/layouts/Content";
+import HomePage from "app/views/pages/HomePage";
+import LoginPage from "app/views/pages/LoginPage";
 import * as React from "react";
 import {
   Route,
   RouteComponentProps,
-  withRouter,
   Switch,
+  withRouter,
 } from "react-router-dom";
-import Content from "app/views/layouts/Content";
-import HomePage from "app/views/pages/HomePage";
-import LoginPage from "app/views/pages/LoginPage";
 
 interface IProps extends RouteComponentProps<any>, React.Props<any> {}
 

@@ -1,13 +1,13 @@
-import * as React from "react";
+import { createStyles, WithStyles, withStyles } from "@material-ui/core";
+import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import { NavLink, RouteComponentProps, withRouter } from "react-router-dom";
-import List from "@material-ui/core/List";
-import { createStyles, WithStyles, withStyles } from "@material-ui/core";
 import { history } from "app/redux/Store";
+import * as React from "react";
+import { NavLink, RouteComponentProps, withRouter } from "react-router-dom";
 
 interface IProps
   extends RouteComponentProps<any>,

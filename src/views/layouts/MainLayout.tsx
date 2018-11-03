@@ -10,31 +10,43 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import MenuIcon from "@material-ui/icons/Menu";
+import Message from "app/components/Message";
+import IMessage from "app/models/IMessage";
+import { IRootState } from "app/redux/reducers/Reducers";
 import Menu from "app/views/layouts/Menu";
 import Routes from "app/views/layouts/Routes";
+import withRoot from "app/views/withRoot";
 import * as React from "react";
+import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 
-interface IProps extends RouteComponentProps<void>, WithStyles<typeof styles> {}
+interface IProps
+  extends RouteComponentProps<void>,
+    React.Props<any>,
+    WithStyles<typeof styles> {}
 interface IState {
   open: boolean;
 }
+interface IStateProps {
+  message: IMessage;
+}
+type IAllProps = IStateProps & IProps;
 
-class MainLayout extends React.Component<IProps, IState> {
+class MainLayout extends React.Component<IAllProps, IState> {
   public state = {
     open: true,
   };
 
   public handleDrawerOpen = () => {
     this.setState({ open: true });
-  }
+  };
 
   public handleDrawerClose = () => {
     this.setState({ open: false });
-  }
+  };
 
   public render() {
-    const { classes } = this.props;
+    const { classes, message } = this.props;
 
     return (
       <React.Fragment>
@@ -88,6 +100,11 @@ class MainLayout extends React.Component<IProps, IState> {
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Routes />
+            <Message
+              messages={message.messages}
+              messageType={message.messageType}
+              isOpen={message.isOpen}
+            />
           </main>
         </div>
       </React.Fragment>
@@ -169,4 +186,14 @@ const styles = (theme: Theme) =>
     },
   });
 
-export default withRouter(withStyles(styles)(MainLayout));
+const mapStateToProps = (state: IRootState): IStateProps => ({
+  message: state.message.message,
+});
+
+export default withRoot(
+  withRouter(
+    connect<IStateProps, {}, {}, IRootState>(mapStateToProps)(
+      withStyles(styles)(MainLayout),
+    ),
+  ),
+);

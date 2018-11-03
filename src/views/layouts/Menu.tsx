@@ -4,10 +4,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import DashboardIcon from "@material-ui/icons/Dashboard";
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
-import { history } from "app/redux/Store";
+import MessageIcon from "@material-ui/icons/Message";
+import { history } from "app/views/layouts/Routes";
 import * as React from "react";
-import { NavLink, RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 interface IProps
   extends RouteComponentProps<any>,
@@ -24,11 +24,11 @@ class Menu extends React.Component<IProps, {}> {
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
-        <ListItem button onClick={() => history.push("/login")}>
+        <ListItem button onClick={() => history.push("/global-message")}>
           <ListItemIcon>
-            <ShoppingCartIcon />
+            <MessageIcon />
           </ListItemIcon>
-          <ListItemText primary="Login" />
+          <ListItemText primary="Global Message" />
         </ListItem>
       </List>
     );

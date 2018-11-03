@@ -1,7 +1,12 @@
 import Content from "app/views/layouts/Content";
+import GlobalMessage from "app/views/pages/GlobalMessage";
 import HomePage from "app/views/pages/HomePage";
-import LoginPage from "app/views/pages/LoginPage";
+import createBrowserHistory from "history/createBrowserHistory";
 import * as React from "react";
+
+// Create a history
+export const history = createBrowserHistory();
+
 import {
   Route,
   RouteComponentProps,
@@ -14,12 +19,12 @@ interface IProps extends RouteComponentProps<any>, React.Props<any> {}
 class Routes extends React.Component<IProps, {}> {
   public render() {
     return (
-      <Switch>
-        <Content>
+      <Content>
+        <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/login" component={LoginPage} />
-        </Content>
-      </Switch>
+          <Route exact path="/global-message" component={GlobalMessage} />
+        </Switch>
+      </Content>
     );
   }
 }

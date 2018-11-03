@@ -1,10 +1,6 @@
 import reducers, { initialState } from "app/redux/reducers/Reducers";
-import createBrowserHistory from "history/createBrowserHistory";
 import { applyMiddleware, compose, createStore } from "redux";
 import logger from "redux-logger";
-
-// Create a history
-const history = createBrowserHistory();
 
 // Create middlewares
 const middlewares = [];
@@ -23,4 +19,4 @@ const store = createStore(
 const action = (type: any, payload: any) => store.dispatch({ type, payload });
 
 // Export history and store
-export { history, store, action };
+export { store, action };

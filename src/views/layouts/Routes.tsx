@@ -1,6 +1,7 @@
 import Content from "app/views/layouts/Content";
 import GlobalMessage from "app/views/pages/GlobalMessage";
 import HomePage from "app/views/pages/HomePage";
+import StepperPage from "app/views/pages/stepper/StepperPage";
 import createBrowserHistory from "history/createBrowserHistory";
 import * as React from "react";
 
@@ -23,6 +24,7 @@ class Routes extends React.Component<IProps, {}> {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/global-message" component={GlobalMessage} />
+          <Route exact path="/stepper" component={StepperPage} />
         </Switch>
       </Content>
     );

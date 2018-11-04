@@ -30,6 +30,12 @@ class Menu extends React.Component<IProps, {}> {
           </ListItemIcon>
           <ListItemText primary="Global Message" />
         </ListItem>
+        <ListItem button onClick={() => history.push("/stepper")}>
+          <ListItemIcon>
+            <MessageIcon />
+          </ListItemIcon>
+          <ListItemText primary="Mobile Stepper" />
+        </ListItem>
       </List>
     );
   }

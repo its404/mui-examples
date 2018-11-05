@@ -5,7 +5,7 @@
   "main": "index.js",
   "husky": {
     "hooks": {
-      "pre-commit": "tslint -c tslint.json 'src/**/*.ts*'"
+      "pre-commit": "tslint --fix -p tsconfig.json && tslint -c tslint.json 'src/**/*.ts*'"
     }
   },
   "dependencies": {
